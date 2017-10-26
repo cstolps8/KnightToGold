@@ -5,15 +5,17 @@ import java.util.Random;
 public class Knight {
 	
 	String path, currentMove;
-	int x, y, boardRows, boardCols;
+	int x, y, boardRows, boardCols, goldX, goldY;
 	boolean goldFound;
 	
 	public Knight() {
 		this.path = "";
 		this.boardRows = 0; // stores number of board rows for later functions
 		this.boardCols = 0; // stores number of board columns for later functions
-		this.x = 0; // x coordinate of knight
-		this.y = 0; // y coordinate of knight
+		this.x = 0; 		// x coordinate of knight
+		this.y = 0; 		// y coordinate of knight
+		this.goldX = 0;		// x coordinate for gold
+		this.goldY = 0;		// y coordinate for gold
 		this.goldFound = false;
 	}
 	
@@ -32,6 +34,22 @@ public class Knight {
 				"\n  Column move: "+randomMove[1]+
 				"\n  Board Rows from Knight: "+this.boardRows+
 				"\n  Board Columns from Knight: "+this.boardCols);
+		
+		int postMoveRow = this.x + rowMove;
+		int postMoveCol = this.y + colMove;
+		
+		if (this.x == this.goldX && this.y == this.goldY) {
+			System.out.println("The gold has been found!\n"+this.getPath());
+		}
+		else if (postMoveCol > this.boardCols || postMoveRow > this.boardRows || postMoveCol < 0 || postMoveRow < 0) {
+			this.moveKnight();
+		}
+		else {
+			this.x = postMoveRow;
+			this.y = postMoveCol;
+			path += "("+	", "+")";
+			this.moveKnight();
+		}
 	}
 	
 	public Integer[] pickMove() {

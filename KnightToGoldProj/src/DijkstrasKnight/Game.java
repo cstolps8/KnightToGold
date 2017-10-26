@@ -73,9 +73,11 @@ public class Game {
 			
 			
 		}
-		// Sets the knightObj x and y coordinates for use in algorithms
+		// Sets the knightObj x and y coordinates and the gold coordinates for use in algorithms
 		knightObj.x = knightX;
 		knightObj.y = knightY;
+		knightObj.goldX = goldX;
+		knightObj.goldY = goldY;
 		
 		// designates the knight (K) and gold (G) coordinates and changes to those characters on the board
 		completeBoard[knightX][knightY] = "K";

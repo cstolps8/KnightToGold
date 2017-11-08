@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class Game {
 	
+	Knight knightObj;
 	String[][] gameBoard;
 	
 	/*
@@ -20,7 +21,18 @@ public class Game {
 		int rows = scannerObj.nextInt();
 		System.out.println("Please enter the number of columns for the board.");
 		int cols = scannerObj.nextInt();
-		this.gameBoard = generateCompleteBoard(rows, cols);
+		
+		this.knightObj = new Knight();
+		
+		this.knightObj = generateCompleteBoard(this.knightObj, rows, cols);
+	}
+	
+	public void simulateGame() {
+		
+		while (this.knightObj.goldFound != true) {
+			this.knightObj.moveKnight();
+			this.knightObj.printBoardObj();
+		}
 	}
 	
 	// Generates a blank board
@@ -36,9 +48,8 @@ public class Game {
 	}
 	
 	// Generates a board and randomly places the Knight and Gold pieces
-	public String[][] generateCompleteBoard(int rows, int cols){
+	public Knight generateCompleteBoard(Knight knightObj, int rows, int cols){
 		// Creates the knight object
-		Knight knightObj = new Knight();
 		knightObj.boardRows = rows;
 		knightObj.boardCols = cols;
 		/*
@@ -76,6 +87,7 @@ public class Game {
 		// Sets the knightObj x and y coordinates and the gold coordinates for use in algorithms
 		knightObj.x = knightX;
 		knightObj.y = knightY;
+		knightObj.path += "("+knightObj.x+", "+knightObj.y+") ";
 		knightObj.goldX = goldX;
 		knightObj.goldY = goldY;
 		
@@ -83,8 +95,8 @@ public class Game {
 		completeBoard[knightX][knightY] = "K";
 		completeBoard[goldX][goldY] = "G";
 		
-		knightObj.moveKnight(); // generates the random move the knight will perform
-		return completeBoard;
+		knightObj.gameBoard = completeBoard;
+		return knightObj;
 	}
 	
 	

@@ -5,13 +5,12 @@ import java.util.Random;
 public class Knight {
 	
 	String path, currentMove;
+	String[][] gameBoard;
 	int x, y, boardRows, boardCols, goldX, goldY;
 	boolean goldFound;
 	
 	public Knight() {
 		this.path = "";
-		this.boardRows = 0; // stores number of board rows for later functions
-		this.boardCols = 0; // stores number of board columns for later functions
 		this.x = 0; 		// x coordinate of knight
 		this.y = 0; 		// y coordinate of knight
 		this.goldX = 0;		// x coordinate for gold
@@ -25,34 +24,27 @@ public class Knight {
 	
 	public void moveKnight() {
 		
-		Integer[] randomMove = pickMove();
-		int rowMove = randomMove[0];
-		int colMove = randomMove[1];
+		this.pickMove();
 		
-		System.out.println("Knight coordinates: ("+this.x+", "+this.y+")" +
+/*		System.out.println("Knight coordinates: ("+this.x+", "+this.y+") " +
 				"\n  Row move: "+randomMove[0]+
-				"\n  Column move: "+randomMove[1]+
-				"\n  Board Rows from Knight: "+this.boardRows+
-				"\n  Board Columns from Knight: "+this.boardCols);
+				"\n  Column move: "+randomMove[1]);		Debugging code */
 		
-		int postMoveRow = this.x + rowMove;
-		int postMoveCol = this.y + colMove;
-		
+
 		if (this.x == this.goldX && this.y == this.goldY) {
-			System.out.println("The gold has been found!\n"+this.getPath());
+			System.out.println("The gold has been found!\nPath: "+this.path);
+			this.goldFound = true;
 		}
-		else if (postMoveCol > this.boardCols || postMoveRow > this.boardRows || postMoveCol < 0 || postMoveRow < 0) {
-			this.moveKnight();
-		}
+
 		else {
-			this.x = postMoveRow;
-			this.y = postMoveCol;
-			path += "("+	", "+")";
+//				System.out.println("** First two loops negated");
+			this.printBoardObj();
+			System.out.println();
 			this.moveKnight();
 		}
 	}
 	
-	public Integer[] pickMove() {
+	public Knight pickMove() {
 		// knightMoves contains the possible moves of the knight
 		//   with the 2-space move first and the 1-space move second
 		String[] knightMoves = {"UL", "UR", "DL", "DR", "RU", "RD", "LU", "LD"};
@@ -112,9 +104,44 @@ public class Knight {
 			
 		}
 		
+		int postMoveRow = this.x + moves[0];
+		int postMoveCol = this.y + moves[1];
 		
 		
-		return moves;
+		while (postMoveCol > this.gameBoard[0].length || postMoveRow > this.gameBoard.length || postMoveCol < 0 || postMoveRow < 0) {
+			this.pickMove();
+//				System.out.println("** Row or columns was out of bounds");
+		}
+		
+			this.gameBoard[this.x][this.y] = ".";
+			this.x = postMoveRow;
+			this.y = postMoveCol;
+			this.path += "("+this.x+", "+this.y+") => ";
+			this.gameBoard[this.x][this.y] = "K";
+
+		
+		return this;
 	}
 
+	/*
+	 * Prints the knight object's gameBoard
+	 */
+	public void printBoardObj() {
+
+		for (int i=0; i<this.gameBoard[0].length; i++) {
+    		if (i == 0)
+				System.out.print("  "+i+"\t");
+    		else 
+    			System.out.print(i+"\t");
+    	}
+    	System.out.println();
+		for (int i=0; i<this.gameBoard.length; i++) {
+			System.out.print(i+" ");
+			for (int j=0; j<this.gameBoard[i].length; j++) {
+				System.out.print(this.gameBoard[i][j]+"\t");
+			}
+			System.out.println();
+		}
+	}
+	
 }

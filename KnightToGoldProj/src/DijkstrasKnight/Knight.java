@@ -48,7 +48,7 @@ public class Knight {
 		// knightMoves contains the possible moves of the knight
 		//   with the 2-space move first and the 1-space move second
 		String[] knightMoves = {"UL", "UR", "DL", "DR", "RU", "RD", "LU", "LD"};
-				
+
 		// Generates a random number to randomly pick the knights move
 		Random randNumber = new Random();
 		int randMovePicker = randNumber.nextInt(knightMoves.length);
@@ -110,7 +110,7 @@ public class Knight {
 		
 		while (postMoveCol > this.gameBoard[0].length || postMoveRow > this.gameBoard.length || postMoveCol < 0 || postMoveRow < 0) {
 			this.pickMove();
-//				System.out.println("** Row or columns was out of bounds");
+				System.out.println("** Row or columns was out of bounds");
 		}
 		
 			this.gameBoard[this.x][this.y] = ".";
@@ -118,7 +118,7 @@ public class Knight {
 			this.y = postMoveCol;
 			this.path += "("+this.x+", "+this.y+") => ";
 			this.gameBoard[this.x][this.y] = "K";
-
+			this.printBoardObj();
 		
 		return this;
 	}

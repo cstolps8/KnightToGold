@@ -17,10 +17,19 @@ public class Game {
 	public Game() {
 		
 		Scanner scannerObj = new Scanner(System.in);
-		System.out.println("Please enter the number of rows for the board.");
+		System.out.println("Please enter the number of rows for the board:");
 		int rows = scannerObj.nextInt();
-		System.out.println("Please enter the number of columns for the board.");
+		System.out.println("Please enter the number of columns for the board:");
 		int cols = scannerObj.nextInt();
+		
+		while (rows < 3 || cols < 3) {
+			System.out.println("Number of rows and columns must be greater than 2. Please enter new values.");
+			System.out.print("Rows: ");
+			rows = scannerObj.nextInt();
+			System.out.print("\nCols: ");
+			cols = scannerObj.nextInt();
+			System.out.println();
+			}
 		
 		this.knightObj = new Knight();
 		

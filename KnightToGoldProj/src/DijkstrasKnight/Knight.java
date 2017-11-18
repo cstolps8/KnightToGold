@@ -44,7 +44,28 @@ public class Knight {
 		}
 	}
 	
+	
+	
 	public Knight pickMove() {
+		// call findmoves
+		findmoves fm = new findmoves();
+		//set the knights position 
+		fm.knightx = this.x;
+		fm.knighty = this.y;
+		
+		// set the board size 
+		fm.rows = this.boardRows;
+		fm.cols = this.boardCols;
+		
+		fm.findlegal();
+		fm.getLegal();
+		//display the legal moves for the current knight location
+		System.out.println("Knight at:("+this.x+", "+this.y+") can make the moves:");
+		for (int i = 0; i < fm.legal.size(); i++) {
+			System.out.println("Knight at: "+fm.legal.get(i) );
+		}
+		
+		
 		// knightMoves contains the possible moves of the knight
 		//   with the 2-space move first and the 1-space move second
 		String[] knightMoves = {"UL", "UR", "DL", "DR", "RU", "RD", "LU", "LD"};
@@ -52,6 +73,8 @@ public class Knight {
 		// Generates a random number to randomly pick the knights move
 		Random randNumber = new Random();
 		int randMovePicker = randNumber.nextInt(knightMoves.length);
+		
+
 			
 		String randomMove = knightMoves[randMovePicker];
 		
@@ -103,6 +126,7 @@ public class Knight {
 			break;
 			
 		}
+		
 		
 		int postMoveRow = this.x + moves[0];
 		int postMoveCol = this.y + moves[1];

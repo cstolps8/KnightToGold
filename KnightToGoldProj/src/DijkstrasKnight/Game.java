@@ -1,5 +1,6 @@
 package DijkstrasKnight;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -8,6 +9,17 @@ public class Game {
 	Knight knightObj;
 	String[][] gameBoard;
 	
+	int rows;
+	int cols;
+	
+	
+	Node n = new Node();
+	public ArrayList<Node>[][] board;
+
+	
+
+
+
 	/*
 	 * Game constructor
 	 * 
@@ -18,9 +30,9 @@ public class Game {
 		
 		Scanner scannerObj = new Scanner(System.in);
 		System.out.println("Please enter the number of rows for the board:");
-		int rows = scannerObj.nextInt();
+		 rows = scannerObj.nextInt();
 		System.out.println("Please enter the number of columns for the board:");
-		int cols = scannerObj.nextInt();
+		 cols = scannerObj.nextInt();
 		
 		while (rows < 3 || cols < 3) {
 			System.out.println("Number of rows and columns must be greater than 2. Please enter new values.");
@@ -34,7 +46,61 @@ public class Game {
 		this.knightObj = new Knight();
 		
 		this.knightObj = generateCompleteBoard(this.knightObj, rows, cols);
+		NodeBoard();
 	}
+	
+	
+	// create a board of nodes made of arraylists and set the coordinates of the board piece 
+	// side note: should create this as a class so that other classes can get the board but this might work
+	public void NodeBoard(){
+		// get the possible moves in Knight object
+		Knight k = new Knight();
+		 board = new ArrayList[rows][cols];
+		
+		
+		
+		
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board.length; j++) {
+			// new node object	
+			Node n = new Node();
+			
+			// add new column 
+			board[i][j] = new ArrayList(); // add another ArrayList object to [0,0]
+
+			
+			// row, col values
+			n.x = i;
+			n.y = j;
+			k.x = n.x;
+			k.y = n.y;
+			n.neihbors.add( k.findMove());
+			
+			
+			board[i][j].add(n);
+		
+
+
+
+			
+			}
+
+		}
+		
+		// print the board 
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board.length; j++) {
+				System.out.print("("+board[i][j].get(n.x).x+", "+board[i][j].get(n.y).y+")      " );
+						
+			}
+			System.out.println();
+			
+		}
+		
+		
+		
+	}// end of NodeBoard
+	
 	
 	public void simulateGame() {
 		
@@ -152,4 +218,21 @@ public class Game {
 		}
 	}
 	
+	
+	
+	// getters and setters 
+	public ArrayList<Node>[][] getBoard() {
+		return board;
+	}
+
+
+	public void setBoard(ArrayList<Node>[][] board) {
+		this.board = board;
+	}
+	
+	public viod setBoardNeighbors(Arraylist neigh) {
+		
+	}
 }
+
+

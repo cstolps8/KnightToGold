@@ -1,12 +1,13 @@
 package DijkstrasKnight;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Knight {
 	
 	String path, currentMove;
 	String[][] gameBoard;
-	int x, y, boardRows, boardCols, goldX, goldY;
+	int x, y, boardRows = 5, boardCols = 5 , goldX, goldY;
 	boolean goldFound;
 	
 	public Knight() {
@@ -24,8 +25,11 @@ public class Knight {
 	
 	public void moveKnight() {
 		
-		this.pickMove();
+	//	this.pickMove();
 		
+	this.findMove();
+	
+	
 /*		System.out.println("Knight coordinates: ("+this.x+", "+this.y+") " +
 				"\n  Row move: "+randomMove[0]+
 				"\n  Column move: "+randomMove[1]);		Debugging code */
@@ -45,25 +49,133 @@ public class Knight {
 	}
 	
 	
+	public  ArrayList findMove() {
+
+		ArrayList legal = new ArrayList<>();
+		
+		//while(!this.goldFound) {
+		
+			
+			// if all of the legal moves have been found try them 
+						
+			
+			
+			//display the legal moves for the current knight location
+			System.out.println("Knight at:("+this.x+", "+this.y+") can make the moves:");
+			//for (int i = 0; i < fm.legal.size(); i++) {
+			//	System.out.println("Knight at: "+fm.legal.get(i) );
+			//}
+			
+			
+
+			
+			int newlegalx;
+			int newlegaly;
+			
+			int[][] possiblemoves = {
+					
+					{ 2, -1 }, 
+					{ 2, 1 },
+					{ -2, -1 },
+					{ -2, 1 }, 
+					{ 1, 2 },
+					{ -1, 2 }, 
+					{ 1, -2 }, 
+					{ -1, -2 }
+
+			};
+					
+
+
+			boardRows = 5;
+			boardCols = 5;
+
+				
+				
+
+				//System.out.println("Knights initial position: ("+knightx+", "+knighty+")");
+				// check if the move will go outside of the board
+				for (int i = 0; i < possiblemoves.length; i++) {
+					ArrayList newlegal = new ArrayList<>(); // holds all the legal moves from the current knight location
+			
+									
+					//System.out.println("Try the move ("+possiblemoves[i][0]+", "+possiblemoves[i][1]+")");
+
+					
+					if ((x + possiblemoves[i][0] >= 0 ) && (y + possiblemoves[i][1] >= 0)) { // make sure move doesn't go negative (lower bound)
+						
+						if (this.x + possiblemoves[i][0] <= boardRows &&  this.y + possiblemoves[i][1] <= boardRows  ){ // keeps knight from going outside the board (upper bound) 
+							
+					
+					// debugging purposes
+						//System.out.println("knight in position: ("+this.x+", "+this.y+")  can make the move: ("+possiblemoves[i][0]+", "+possiblemoves[i][1]+")" );
+						
+							int tmpx = (this.x + possiblemoves[i][0]);
+							int tmpy = (this.y + possiblemoves[i][1]);
+						
+						//	System.out.println(" to positions (" + tmpx  + ", "+tmpy+")");
+					 
+							
+						
+							// check if the gold has been found
+							if (tmpx == this.goldX && tmpy == this.goldY) {
+								System.out.println(" gold has been found ");
+								System.out.println(" to positions (" + this.goldX  + ", "+this.goldY+")");
+								this.printBoardObj();
+								System.out.println();
+								this.goldFound = true;
+								break;
+								
+								
+							}
+							newlegal.add(possiblemoves[i][0]); // add x of legal move 
+						
+							newlegal.add(possiblemoves[i][1]); // add y of legal move
+						
+						
+						
+							legal.add(newlegal); // add the legal moves to the array of the current location of the knight 
+						
+							// print the board 
+							//	this.printBoardObj();
+							System.out.println();
+							
+							
+						}
+							
+					}
+					
+				
+					
+				}
+				
+				
+				
+	//	}// end of while loop
+			
+			return legal;
+	
+			
+				
+				
+				
+				
+
+			
+			
+			
+		
+		
+	}
+	
 	
 	public Knight pickMove() {
-		// call findmoves
-		findmoves fm = new findmoves();
-		//set the knights position 
-		fm.knightx = this.x;
-		fm.knighty = this.y;
 		
-		// set the board size 
-		fm.rows = this.boardRows;
-		fm.cols = this.boardCols;
 		
-		fm.findlegal();
-		fm.getLegal();
-		//display the legal moves for the current knight location
-		System.out.println("Knight at:("+this.x+", "+this.y+") can make the moves:");
-		for (int i = 0; i < fm.legal.size(); i++) {
-			System.out.println("Knight at: "+fm.legal.get(i) );
-		}
+		
+		findMove();
+		
+		
 		
 		
 		// knightMoves contains the possible moves of the knight

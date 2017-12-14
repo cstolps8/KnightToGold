@@ -3,9 +3,29 @@ package DijkstrasKnight;
 import java.util.ArrayList;
 
 public class Node {
+	
+	
+	public Node(int x, int y, ArrayList neihbors, boolean isvisited, int distance) {
+		super();
+		this.x = x;
+		this.y = y;
+		this.neihbors = neihbors;
+		this.isvisited = isvisited;
+		this.distance = Integer.MAX_VALUE;
+	}
+	
+	public Node() {
+		super();
+		
+		
+		
+		
+	}
 	// vertex
 	public int x; 
 	public int y;
+	
+	
 	
 
 	// edges

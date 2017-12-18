@@ -5,14 +5,15 @@ import java.util.Random;
 
 public class Knight {
 
-	String path, currentMove;
+	String currentMove;
 	String[][] gameBoard;
 	int x, y, boardRows, boardCols, goldX, goldY;
 	boolean goldFound;
+	ArrayList<Node>path;
 	
 
 	public Knight() {
-		this.path = "";
+		this.path = null;
 		this.x = 0; // x coordinate of knight
 		this.y = 0; // y coordinate of knight
 		this.goldX = 0; // x coordinate for gold
@@ -20,8 +21,12 @@ public class Knight {
 		this.goldFound = false;
 	}
 
-	public String getPath() {
-		return this.path;
+	public void getPath() {
+		for (int j = 0; j < path.size(); j++) {
+			
+			System.out.println( this.path.get(j));	
+		}
+		
 	}
 
 	public void moveKnight() {
@@ -50,77 +55,7 @@ public class Knight {
 		}
 	}
 
-	public ArrayList findMove(int x, int y) {
-
-		// stores the legal moves that can be made from that cell
-		ArrayList legal = new ArrayList<>();
-
-		// display the legal moves for the current knight location
-		//System.out.println("Knight at:(" + x + ", " + y + ") can make the moves:");
-
-		//boardRows = 5;
-	//	boardCols = 5;
-
-		int[][] possiblemoves = {
-
-				{ 2, -1 }, { 2, 1 }, { -2, -1 }, { -2, 1 }, { 1, 2 }, { -1, 2 }, { 1, -2 }, { -1, -2 }
-
-		};
-		
-		
-		// check if the move will go outside of the board
-		for (int i = 0; i < possiblemoves.length; i++) {
-			ArrayList newlegal = new ArrayList<>(); // holds all the legal moves from the current cell
-
-			// System.out.println("Try the move ("+possiblemoves[i][0]+",
-			// "+possiblemoves[i][1]+")");
-
-			if ((x + possiblemoves[i][0] >= 0) && (y + possiblemoves[i][1] >= 0)) { // make sure move doesn't go negative (lower bound) can = 0
-
-				if (x + possiblemoves[i][0] < boardRows && y + possiblemoves[i][1] < boardCols) { // keeps knight from going outside the board (upper\ bound) has to be 1- board size
-
-					
-
-					// tmpx and tmpy finds the coordinates of the cells that are the possible moves for the cell being searched
-					int tmpx = (x + possiblemoves[i][0]);
-					int tmpy = (y + possiblemoves[i][1]);
-					
-				//	System.out.println(tmpx + "   "+ tmpy);
-
-					// System.out.println(" to positions (" + tmpx + ", "+tmpy+")");
-
-					// check if the gold has been found
-					if (tmpx == this.goldX && tmpy == this.goldY) {
-						System.out.println(" gold has been found ");
-						System.out.println(" gold is at: (" + this.goldX + ", " + this.goldY + ")");
-						System.out.println("with move: (" + possiblemoves[i][0] + ", " + possiblemoves[i][1] + ")");
-						// this.printBoardObj();
-						System.out.println();
-						this.goldFound = true;
-						// break;
-
-					}
-					// add arraylist newLegal to arraylist legal,
-					// which only has 2 values (r,c) to legal moves
-				//	newlegal.add(possiblemoves[i][0]); // add x of legal move
-					newlegal.add(tmpx); 
-				//	newlegal.add(possiblemoves[i][1]); // add y of legal move
-					newlegal.add(tmpy); 
-					legal.add(newlegal); // add the legal moves to the array of the current location of the knight
-
-
-				}
-
-			}
-
-		}
-
-		// }// end of while loop
-
-		return legal;
-
-	}
-
+	
 	public Knight pickMove() {
 
 		// knightMoves contains the possible moves of the knight
@@ -194,7 +129,7 @@ public class Knight {
 		this.gameBoard[this.x][this.y] = ".";
 		this.x = postMoveRow;
 		this.y = postMoveCol;
-		this.path += "(" + this.x + ", " + this.y + ") => ";
+	//	this.path += "(" + this.x + ", " + this.y + ") => ";
 		this.gameBoard[this.x][this.y] = "K";
 		this.printBoardObj();
 

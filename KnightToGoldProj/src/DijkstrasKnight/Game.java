@@ -43,7 +43,56 @@ public class Game {
 		this.knightObj = new Knight();
 
 		this.knightObj = generateCompleteBoard(this.knightObj, rows, cols);
+
 		NodeBoard();
+
+		for (int i = 0; i < N.length; i++) {
+			for (int j = 0; j < N.length; j++) {
+				addNodeNeighbors( i, j);
+			}
+		}
+
+	}
+
+	// now that the board has been initialized add its neighbors
+	public void addNodeNeighbors( int x, int y) {
+		
+
+		int[][] possiblemoves = {
+
+				{ 2, -1 }, { 2, 1 }, { -2, -1 }, { -2, 1 }, { 1, 2 }, { -1, 2 }, { 1, -2 }, { -1, -2 }
+
+		};
+
+		// check if the move will go outside of the board
+		for (int i = 0; i < possiblemoves.length; i++) {
+			ArrayList newlegal = new ArrayList<>(); // holds all the legal moves from the current cell
+
+			// make sure move doesn't go negative (lower bound) can = 0
+			if ((x + possiblemoves[i][0] >= 0) && (y + possiblemoves[i][1] >= 0)) { 
+																					
+
+				 // keeps knight from going outside the board (upper\ bound) has to be 1- board size
+				if (x + possiblemoves[i][0] < knightObj.boardRows && y + possiblemoves[i][1] < knightObj.boardCols) {
+																									
+					// tmpx and tmpy finds the coordinates of the cells that are the possible moves
+					// for the cell being searched
+					int tmpx = (x + possiblemoves[i][0]);
+					int tmpy = (y + possiblemoves[i][1]);
+
+					// store the "cell" node into the neighbors
+					N[x][y].neihbors.add(N[tmpx][tmpy]);
+
+				}
+
+			}
+
+		}
+
+		// }// end of loop
+
+
+
 	}
 
 	// create a board of nodes made of arraylists and set the coordinates of the
@@ -58,20 +107,22 @@ public class Game {
 
 		k.boardRows = rows;
 		k.boardCols = cols;
-
+		int count = 0;
 
 		for (int i = 0; i < this.rows; i++) {
 			for (int j = 0; j < this.cols; j++) {
 
 				// create a node that stores the neighbors
-				// k.findMove(i,j) is passed row and col and returns the moves that can be made from the (i,j) cell
-				// passed in ( row, col, array of the legal moves of that cell(row,col), is visited, distance
-				
-				N[i][j] = new Node(i, j, k.findMove(i, j), false, 1);
-				//System.out.println(N[i][j].x);
-				//System.out.println("Cell: ("+i+", "+j+") has moves: "+N[i][j].neihbors);	// this works yay5
-				//System.out.println("*************************************");
-				//System.out.println();
+				// k.findMove(i,j) is passed row and col and returns the moves that can be made
+				// from the (i,j) cell
+				// passed in ( row, col, array of the legal moves of that cell(row,col), is
+				// visited, distance
+
+				// N[i][j] = new Node(i, j, k.findMove(i, j), false, 1);
+
+				N[i][j] = new Node(i, j,  false, 1, count++);
+
+
 
 			}
 		}
@@ -79,16 +130,13 @@ public class Game {
 	}// end of NodeBoard
 
 	public void simulateGame() {
-		
-		// 
 
-		
-		
+		//
 
-		//while (this.knightObj.goldFound != true) {
-		//	this.knightObj.moveKnight();
-		//	this.knightObj.printBoardObj();
-		//}
+		// while (this.knightObj.goldFound != true) {
+		// this.knightObj.moveKnight();
+		// this.knightObj.printBoardObj();
+		// }
 	}
 
 	// Generates a blank board
@@ -145,7 +193,7 @@ public class Game {
 		// algorithms
 		knightObj.x = knightX;
 		knightObj.y = knightY;
-		knightObj.path += "(" + knightObj.x + ", " + knightObj.y + ") ";
+		// knightObj.path += "(" + knightObj.x + ", " + knightObj.y + ") ";
 		knightObj.goldX = goldX;
 		knightObj.goldY = goldY;
 
